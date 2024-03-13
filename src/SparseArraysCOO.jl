@@ -59,6 +59,20 @@ Convert to the standard sparse vector representation.
 """
 SparseArrays.sparse(x::SparseVectorCOO) = sparsevec(x.I, x.V, x.n)
 
+"""
+    Vector(x::SparseVectorCOO)::Vector
+
+Convert to the standard dense vector representation.
+"""
+Base.Vector(x::SparseVectorCOO) = Vector(sparse(x))
+
+"""
+    Array(x::SparseVectorCOO)::Array
+
+Convert to the standard dense vector representation.
+"""
+Base.Array(x::SparseVectorCOO) = Vector(x)
+
 # Expensive operations are intentionally not provided. Instead, call
 # `sparse` to switch to an efficient representation, and then apply
 # these operations. Expensive operations include e.g. comparisons and
@@ -140,12 +154,27 @@ function Base.setindex!(A::SparseMatrixCOO, v, i::Integer, j::Integer)
     push!(A.V, v)
     return A
 end
+
 """
     SparseArrays.sparse(A::SparseMatrixCOO)::SparseMatrixCSC
 
 Convert to the standard sparse matrix representation.
 """
 SparseArrays.sparse(A::SparseMatrixCOO) = sparse(A.I, A.J, A.V, A.m, A.n)
+
+"""
+    Matrix(A::SparseMatrixCOO)::Matrix
+
+Convert to the standard dense matrix representation.
+"""
+Base.Matrix(A::SparseMatrixCOO) = Matrix(sparse(A))
+
+"""
+    Array(A::SparseMatrixCOO)::Matrix
+
+Convert to the standard dense matrix representation.
+"""
+Base.Array(A::SparseMatrixCOO) = Matrix(A)
 
 # Expensive operations are intentionally not provided. Instead, call
 # `sparse` to switch to an efficient representation, and then apply

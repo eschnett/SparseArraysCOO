@@ -31,6 +31,16 @@ const BigRat = Rational{BigInt}
         @test eltype(x) ≡ BigRat
         @test size(x) == (n,)
 
+        xV = Vector(x)
+        @test xV == x
+        @test eltype(xV) ≡ BigRat
+        @test size(xV) == (n,)
+
+        xA = Array(x)
+        @test xA == x
+        @test eltype(xA) ≡ BigRat
+        @test size(xA) == (n,)
+
         # have_overlap = nnz(x) < n
 
         moment0′ = BigRat(0)
@@ -194,6 +204,11 @@ end
         b = BigRat(rand(Int8)) / rand(1:10)
 
         @test sparse(A) == A₀
+
+        @test Matrix(A) == A₀
+        @test eltype(Matrix(A)) == eltype(A₀)
+        @test Array(A) == A₀
+        @test eltype(Array(A)) == eltype(A₀)
 
         @test sparse(A + N) == sparse(A)
         @test sparse(A + B) == sparse(B + A)
